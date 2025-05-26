@@ -15,24 +15,22 @@ export default function UserLogin() {
         e.preventDefault();
 
         const response = await userLogin({username, password});
-        const responseData = await response.json();
-        console.log(responseData);
+        const responseBody = await response.json();
+        console.log(responseBody);
 
-        if(response.status === 200) {
+        if (response.status === 200) {
             // save token and user data to localStorage
-            const token = responseData.data.token;
+            const token = responseBody.data.token;
             setToken(token);
             await navigate({
-                pathname: '/dashboard'
+                pathname: '/dashboard/contacts'
             })
-            // localStorage.setItem('token', responseData.token);
-            // localStorage.setItem('user', JSON.stringify(responseData.user));
+            // localStorage.setItem('token', responseBody.token);
+            // localStorage.setItem('user', JSON.stringify(responseBody.user));
             // await navigate({pathname: '/dashboard'});
         } else {
-            await alertError(responseData.errors);
+            await alertError(responseBody.errors);
         }
-
-
     }
 
     return <>

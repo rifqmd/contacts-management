@@ -24,8 +24,8 @@ export default function UserRegister() {
             password: password,
             name: name
         });
-        const responseData = await response.json();
-        console.log(responseData);
+        const responseBody = await response.json();
+        console.log(responseBody);
 
         if(response.status === 200) {
             await alertSuccess("User created successfully");
@@ -33,7 +33,7 @@ export default function UserRegister() {
                 pathname: '/login'
             });
         } else {
-            await alertError(responseData.errors)
+            await alertError(responseBody.errors)
         }
     }
 

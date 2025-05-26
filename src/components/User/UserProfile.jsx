@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {useEffectOnce, useLocalStorage} from "react-use";
-import {userDetail} from "../../lib/api/UserApi.jsx";
-import {alertError} from "../../lib/alert.jsx";
+import {userDetail, userUpdatePassword, userUpdateProfile} from "../../lib/api/UserApi.jsx";
+import {alertError, alertSuccess} from "../../lib/alert.jsx";
 
 export default function UserProfile() {
 
@@ -11,14 +11,49 @@ export default function UserProfile() {
     const [token, _] = useLocalStorage("token", "");
 
     async function fetchUserDetail() {
-        const response = await userDetail(token)
-        const responseData = await response.json();
-        console.log(responseData);
+        const response = await userDetail(token);
+        const responseBody = await response.json();
+        console.log(responseBody);
 
         if (response.status === 200) {
-            setName(responseData.data.name)
+            setName(responseBody.data.name);
         } else {
-            await alertError(responseData.errors)
+            await alertError(responseBody.errors);
+        }
+    }
+
+    async function handleSubmitProfile(e) {
+        e.preventDefault();
+
+        const response = await userUpdateProfile(token, {name});
+        const responseBody = await response.json();
+        console.log(responseBody);
+
+        if (response.status === 200) {
+            await alertSuccess("Profile updated successfully");
+        } else {
+            await alertError(responseBody.errors);
+        }
+    }
+
+    async function handleSubmitPassword(e) {
+        e.preventDefault();
+
+        if (password !== confirmPassword) {
+            await alertError("Passwords don't match");
+            return;
+        }
+
+        const response = await userUpdatePassword(token, {password});
+        const responseBody = await response.json();
+        console.log(responseBody);
+
+        if (response.status === 200) {
+            setPassword('');
+            setConfirmPassword('');
+            await alertSuccess("Password updated successfully");
+        } else {
+            await alertError(responseBody.errors);
         }
     }
 
@@ -42,7 +77,7 @@ export default function UserProfile() {
                         </div>
                         <h2 className="text-xl font-semibold text-white">Edit Profile</h2>
                     </div>
-                    <form>
+                    <form onSubmit={handleSubmitProfile}>
                         <div className="mb-5">
                             <label htmlFor="name" className="block text-gray-300 text-sm font-medium mb-2">Full Name</label>
                             <div className="relative">
@@ -73,7 +108,7 @@ export default function UserProfile() {
                         </div>
                         <h2 className="text-xl font-semibold text-white">Change Password</h2>
                     </div>
-                    <form>
+                    <form onSubmit={handleSubmitPassword}>
                         <div className="mb-5">
                             <label htmlFor="new_password" className="block text-gray-300 text-sm font-medium mb-2">New Password</label>
                             <div className="relative">

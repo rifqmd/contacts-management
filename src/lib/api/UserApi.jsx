@@ -3,9 +3,13 @@ export const userRegister = async ({username, password, name}) => {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Accept': 'application/json'
+            'Accept': 'application/json',
         },
-        body: JSON.stringify({username, password, name})
+        body: JSON.stringify({
+            username,
+            password,
+            name
+        }),
     })
 }
 
@@ -14,9 +18,12 @@ export const userLogin = async ({username, password}) => {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Accept': 'application/json'
+            'Accept': 'application/json',
         },
-        body: JSON.stringify({username, password})
+        body: JSON.stringify({
+            username,
+            password
+        }),
     })
 }
 
@@ -28,7 +35,9 @@ export const userUpdateProfile = async (token, {name}) => {
             'Accept': 'application/json',
             'Authorization': token
         },
-        body: JSON.stringify({name})
+        body: JSON.stringify({
+            name
+        }),
     })
 }
 
@@ -40,7 +49,9 @@ export const userUpdatePassword = async (token, {password}) => {
             'Accept': 'application/json',
             'Authorization': token
         },
-        body: JSON.stringify({password})
+        body: JSON.stringify({
+            password
+        }),
     })
 }
 
@@ -49,8 +60,17 @@ export const userDetail = async (token) => {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
-            // 'Authorization': `Bearer ${token}`
             'Authorization': token
-        },
+        }
+    })
+}
+
+export const userLogout = async (token) => {
+    return await fetch(`${import.meta.env.VITE_API_PATH}/users/logout`, {
+        method: 'DELETE',
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': token
+        }
     })
 }
