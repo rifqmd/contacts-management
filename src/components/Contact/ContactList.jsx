@@ -13,6 +13,7 @@ export default function ContactList() {
     const [contacts, setContacts] = useState([]);
     const [page, setPage] = useState(1);
     const [totalPage, setTotalPage] = useState(1);
+    const [reload, setReload] = useState(false);
 
     function getPages() {
         const pages = [];
@@ -24,12 +25,12 @@ export default function ContactList() {
 
     async function handleSearchContacts(e) {
         e.preventDefault();
-        await fetchContacts();
+        setReload(!reload); 
     }
 
     async function handlePageChange(page) {
         setPage(page);
-        await fetchContacts();
+        setReload(!reload);
     }
 
     async function fetchContacts() {
@@ -48,7 +49,7 @@ export default function ContactList() {
     useEffect(() => {
         fetchContacts()
         .then(() => console.log('Successfully fetch contacts'));
-    }, [])
+    }, [reload])
 
     useEffectOnce(() => {
         const toggleButton = document.getElementById('toggleSearchForm');
