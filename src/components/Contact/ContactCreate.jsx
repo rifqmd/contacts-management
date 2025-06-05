@@ -20,7 +20,7 @@ export default function ContactCreate () {
         const responseBody = await response.json();
         console.log(responseBody);
 
-        if (responseBody.status === 200) {
+        if (response.status === 200) {
             await alertSuccess("Contact created successfully!");
             navigate({
                 pathname: "/dashboard/contacts",
