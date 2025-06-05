@@ -1,6 +1,6 @@
 import {useState} from "react";
-import {alertError, alertSuccess} from "../../lib/alert.jsx";
-import {userRegister} from "../../lib/api/UserApi.jsx";
+import {alertError, alertSuccess} from "../../lib/alert.js";
+import {userRegister} from "../../lib/api/UserApi.js";
 import {Link, useNavigate} from "react-router";
 
 export default function UserRegister() {

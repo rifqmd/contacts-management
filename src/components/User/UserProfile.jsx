@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {useEffectOnce, useLocalStorage} from "react-use";
-import {userDetail, userUpdatePassword, userUpdateProfile} from "../../lib/api/UserApi.jsx";
-import {alertError, alertSuccess} from "../../lib/alert.jsx";
+import {userDetail, userUpdatePassword, userUpdateProfile} from "../../lib/api/UserApi.js";
+import {alertError, alertSuccess} from "../../lib/alert.js";
 
 export default function UserProfile() {
 

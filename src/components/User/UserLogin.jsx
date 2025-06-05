@@ -1,8 +1,8 @@
 import {Link, useNavigate} from "react-router";
 import {useState} from "react";
-import {alertError} from "../../lib/alert.jsx";
+import {alertError} from "../../lib/alert.js";
 import {useLocalStorage} from "react-use";
-import {userLogin} from "../../lib/api/UserApi.jsx";
+import {userLogin} from "../../lib/api/UserApi.js";
 
 export default function UserLogin() {
 
