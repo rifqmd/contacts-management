@@ -1,8 +1,8 @@
 import {Link} from "react-router";
 import {useEffectOnce, useLocalStorage} from "react-use";
 import {useEffect, useState} from "react";
-import {contactList} from "../../lib/api/ContactApi.js";
-import {alertError} from "../../lib/alert.js";
+import {contactDelete, contactList} from "../../lib/api/ContactApi.js";
+import {alertConfirm, alertError, alertSuccess} from "../../lib/alert.js";
 
 export default function ContactList() {
 
@@ -32,6 +32,24 @@ export default function ContactList() {
         setPage(page);
         setReload(!reload);
     }
+
+    async function handleContactDelete(id) {
+        if (!await alertConfirm("Are you sure you want to delete this contact?")) {
+            return;
+        }
+
+        const response = await contactDelete(token, id);
+        const responseBody = await response.json();
+        console.log(responseBody);
+
+        if (response.status === 200) {
+            await alertSuccess("Contact deleted successfully");
+            setReload(!reload);
+        } else {
+            await alertError(responseBody.errors);
+        }
+    }
+
 
     async function fetchContacts() {
         const response = await contactList(token, {name, email, phone, page});
@@ -204,7 +222,7 @@ export default function ContactList() {
                                className="px-4 py-2 bg-gradient text-white rounded-lg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-200 font-medium shadow-md flex items-center">
                                 <i className="fas fa-edit mr-2"></i> Edit
                             </Link>
-                            <button
+                            <button onClick={() => handleContactDelete(contact.id)}
                                 className="px-4 py-2 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-lg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-200 font-medium shadow-md flex items-center">
                                 <i className="fas fa-trash-alt mr-2"></i> Delete
                             </button>
