@@ -1,4 +1,4 @@
-import {Link, useNavigate, useParams} from "react-router";
+import {Link, useParams} from "react-router";
 import {useState} from "react";
 import {useEffectOnce, useLocalStorage} from "react-use";
 import {contactDetail, contactUpdate} from "../../lib/api/ContactApi.js";
@@ -12,7 +12,6 @@ export default function ContactEdit() {
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [token, _] = useLocalStorage("token", "")
-    const navigate = useNavigate();
 
     async function fetchContact() {
         const response = await contactDetail(token, id);
@@ -38,9 +37,6 @@ export default function ContactEdit() {
 
         if (response.status === 200) {
             await alertSuccess("Contact updated successfully!");
-            navigate({
-                pathname: "/dashboard/contacts",
-            })
         } else {
             await alertError(responseBody.errors);
         }
