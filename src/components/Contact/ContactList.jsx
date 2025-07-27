@@ -230,8 +230,6 @@ export default function ContactList() {
                     </div>
                 </div>
             ))}
-
-
         </div>
 
         {/*Pagination*/}
