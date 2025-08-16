@@ -14,6 +14,9 @@ import ContactDetail from "./components/Contact/ContactDetail.jsx";
 import AddressCreate from "./components/Address/AddressCreate.jsx";
 import AddressEdit from "./components/Address/AddressEdit.jsx";
 
+// css
+import './index.css'
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
